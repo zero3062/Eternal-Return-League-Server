@@ -18,9 +18,11 @@
   "homepage": "https://github.com/zero3062/Eternal-Return-League-Server#readme",
   "description": "",
   "dependencies": {
+    "cluster": "^0.7.7",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "http": "^0.0.1-security",
+    "os": "^0.1.2",
     "socket.io": "^4.8.0",
     "ts-node": "^10.9.2"
   }
