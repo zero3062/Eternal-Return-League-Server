@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 var io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://zero3062.github.io/Eternal-Return-League",
     methods: ["GET", "POST"],
   },
 });
