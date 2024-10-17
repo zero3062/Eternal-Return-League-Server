@@ -1,14 +1,33 @@
 const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
 const cors = require('cors');
 const cluster = require('cluster');
-const os = require('os');
-
-const numCPUs = os.cpus().length;
+const http = require('http');
+const { Server } = require('socket.io');
+const redisAdapter = require('socket.io-redis');
+const numCPUs = require('os').cpus().length;
+const { setupMaster, setupWorker } = require('@socket.io/sticky');
 
 if (cluster.isMaster) {
   console.log(`Master ${process.pid} is running`);
+
+  const app = express();
+  app.use(
+    cors({
+      origin: [
+        'http://localhost:3000',
+        'https://zero3062.github.io/Eternal-Return-League',
+      ],
+    })
+  );
+
+  const server = http.createServer(app);
+  setupMaster(server, {
+    loadBalancingMethod: 'least-connection', // either "random", "round-robin" or "least-connection"
+  });
+
+  server.listen(8080, () => {
+    console.log(`Worker ${process.pid} started and SERVER IS RUNNING`);
+  });
 
   // 각 CPU에 대해 워커 생성
   for (let i = 0; i < numCPUs; i++) {
@@ -44,6 +63,9 @@ if (cluster.isMaster) {
     },
     allowEIO3: true,
   });
+
+  io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
+  setupWorker(io);
 
   io.on('connection', (socket) => {
     console.log(`User Connected: ${socket.id}`);
