@@ -21,7 +21,7 @@ var io = new Server(server, {
       'https://zero3062.github.io/Eternal-Return-League',
     ],
     methods: ['GET', 'POST'],
-    transports: ['websocket', 'polling'],
+    transports: ['websocket'],
     credentials: true,
   },
   allowEIO3: true,
