@@ -33,6 +33,10 @@ io.on('connection', (socket) => {
     console.log(data);
     socket.broadcast.emit('receive_message', data);
   });
+
+  socket.on("disconnect", (reason) => {
+    console.log(`User Disconnected: ${reason}`);
+  });
 });
 
 server.listen(8080, () => {
