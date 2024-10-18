@@ -8,8 +8,10 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://zero3062.github.io/Eternal-Return-League',
+      'https://zero3062.github.io',
     ],
+    methods: ["GET", "POST"],
+    credentials: true,
   })
 );
 const server = http.createServer(app);
@@ -18,7 +20,7 @@ var io = new Server(server, {
   cors: {
     origin: [
       'http://localhost:3000',
-      'https://zero3062.github.io/Eternal-Return-League',
+      'https://zero3062.github.io',
     ],
     methods: ['GET', 'POST'],
     credentials: true,
